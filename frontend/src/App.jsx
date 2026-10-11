@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ProjectTasks from "./ProjectTasks";
+import CreateProject from "./CreateProject";
 import "./App.css";
 
 const API_URL = "http://localhost:5005/api";
@@ -176,6 +177,15 @@ export default function App() {
               {error}
             </div>
           )}
+
+          <CreateProject
+  token={session.token}
+  onCreated={(project) => {
+    setProjects((current) => [project, ...current]);
+    setError("");
+  }}
+  onUnauthorized={handleUnauthorized}
+/>
 
           <div className="section-heading">
             <h2>Your projects</h2>

@@ -381,3 +381,25 @@ a:focus-visible {
   width: 100%;
   margin-top: 12px;
 }
+
+.create-project-section {
+  margin-top: 28px;
+}
+
+.create-project-section .task-form {
+  max-width: 600px;
+}
+
+.create-project-section .message {
+  margin-bottom: 20px;
+}
+
+.create-project-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.create-project-actions .primary-button {
+  width: auto;
+}
