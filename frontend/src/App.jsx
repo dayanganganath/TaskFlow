@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ProjectTasks from "./ProjectTasks";
 import "./App.css";
 
 const API_URL = "http://localhost:5005/api";
@@ -62,7 +63,9 @@ export default function App() {
       (password.length < 8 ||
         new TextEncoder().encode(password).length > 72)
     ) {
-      setError("Password must contain at least 8 characters and at most 72 bytes.");
+      setError(
+        "Password must contain at least 8 characters and at most 72 bytes."
+      );
       return;
     }
 
@@ -71,8 +74,15 @@ export default function App() {
     try {
       const body =
         mode === "register"
-          ? { name: name.trim(), email: email.trim(), password }
-          : { email: email.trim(), password };
+          ? {
+              name: name.trim(),
+              email: email.trim(),
+              password,
+            }
+          : {
+              email: email.trim(),
+              password,
+            };
 
       const response = await fetch(`${API_URL}/auth/${mode}`, {
         method: "POST",
@@ -113,6 +123,7 @@ export default function App() {
     setMode((current) =>
       current === "login" ? "register" : "login"
     );
+
     setError("");
     setSuccess("");
     setPassword("");
@@ -129,11 +140,18 @@ export default function App() {
     setMode("login");
   }
 
+  function handleUnauthorized() {
+    logout();
+    setError("Your session has expired. Please log in again.");
+  }
+
   if (session) {
     return (
       <div className="dashboard">
         <header className="dashboard-header">
-          <a className="brand" href="/">TaskFlow<span>.</span></a>
+          <a className="brand" href="/">
+            TaskFlow<span>.</span>
+          </a>
 
           <button
             className="secondary-button"
@@ -146,7 +164,9 @@ export default function App() {
 
         <main className="dashboard-content">
           <p className="eyebrow">YOUR WORKSPACE</p>
+
           <h1>Welcome, {session.user.name}</h1>
+
           <p className="muted">
             Keep your projects organized and your work moving.
           </p>
@@ -173,21 +193,15 @@ export default function App() {
           </div>
 
           {projectsLoading ? (
-            <p className="muted" role="status">Loading projects...</p>
-          ) : projects.length === 0 ? (
-            <div className="empty-state">
-              No projects to display.
-            </div>
+            <p className="muted" role="status">
+              Loading projects...
+            </p>
           ) : (
-            <div className="project-grid">
-              {projects.map((project) => (
-                <article className="project-card" key={project.id}>
-                  <span className="project-label">PROJECT</span>
-                  <h3>{project.name}</h3>
-                  <p>{project.description || "No description added."}</p>
-                </article>
-              ))}
-            </div>
+            <ProjectTasks
+              projects={projects}
+              token={session.token}
+              onUnauthorized={handleUnauthorized}
+            />
           )}
         </main>
       </div>
@@ -197,11 +211,19 @@ export default function App() {
   return (
     <main className="auth-layout">
       <section className="intro-panel">
-        <div className="brand light">TaskFlow<span>.</span></div>
+        <div className="brand light">
+          TaskFlow<span>.</span>
+        </div>
 
         <div className="intro-content">
           <p className="eyebrow">MAKE ROOM FOR FOCUSED WORK</p>
-          <h1>Clear tasks.<br />Steady progress.</h1>
+
+          <h1>
+            Clear tasks.
+            <br />
+            Steady progress.
+          </h1>
+
           <p>
             Bring your projects, priorities and daily work into
             one simple workspace.
@@ -253,6 +275,7 @@ export default function App() {
             {mode === "register" && (
               <div className="field">
                 <label htmlFor="name">Full name</label>
+
                 <input
                   id="name"
                   type="text"
@@ -270,6 +293,7 @@ export default function App() {
 
             <div className="field">
               <label htmlFor="email">Email address</label>
+
               <input
                 id="email"
                 type="email"
@@ -285,6 +309,7 @@ export default function App() {
 
             <div className="field">
               <label htmlFor="password">Password</label>
+
               <input
                 id="password"
                 type="password"

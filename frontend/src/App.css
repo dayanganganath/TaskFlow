@@ -324,3 +324,60 @@ a:focus-visible {
     padding: 36px 24px;
   }
 }
+
+.task-actions {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.task-status-control {
+  display: grid;
+  gap: 6px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.task-status-control label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #405c4a;
+}
+
+.task-status-control select {
+  padding: 12px;
+  border: 1px solid #d5dfd8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #18332a;
+  font: inherit;
+  font-size: 14px;
+}
+
+.task-status-control select:focus {
+  outline: 3px solid #27845f22;
+  border-color: #27845f;
+}
+
+.danger-button {
+  border: 1px solid #f0c6be;
+  background: #fff0ed;
+  color: #a33425;
+  padding: 13px 20px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.danger-button:hover:not(:disabled) {
+  background: #fce0db;
+}
+
+.cancel-edit {
+  width: 100%;
+  margin-top: 12px;
+}
