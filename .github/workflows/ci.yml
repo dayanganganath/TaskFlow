@@ -110,3 +110,19 @@ jobs:
 
       - name: Build frontend
         run: npm run build
+
+  docker:
+    name: Docker image builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [backend, frontend]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Build backend image
+        run: docker build -t taskflow-backend:ci ./backend
+
+      - name: Build frontend image
+        run: docker build -t taskflow-frontend:ci ./frontend

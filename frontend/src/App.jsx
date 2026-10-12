@@ -3,7 +3,7 @@ import ProjectTasks from "./ProjectTasks";
 import CreateProject from "./CreateProject";
 import "./App.css";
 
-const API_URL = "http://localhost:5005/api";
+const API_URL = "/api";
 
 export default function App() {
   const [mode, setMode] = useState("login");

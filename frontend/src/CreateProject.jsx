@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API_URL = "http://localhost:5005/api";
+const API_URL = "/api";
 
 export default function CreateProject({
   token,
